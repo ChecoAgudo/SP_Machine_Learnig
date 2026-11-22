@@ -17,7 +17,11 @@ from PIL import Image
 from src import preprocesamiento as prep
 from src import modelo_dl as dl
 
-st.set_page_config(page_title="Diagnóstico foliar - Tomate", layout="wide")
+st.set_page_config(
+    page_title="Diagnóstico Foliar · Tomate",
+    page_icon="🍅",          # emoji = cero archivos nuevos, funciona igual en local y en Streamlit Cloud
+    layout="wide",
+)
 
 # ===========================================================================
 # TEXTOS DE AYUDA (burbujas "?"). Editalos aqui si quieres cambiar una explicacion.
