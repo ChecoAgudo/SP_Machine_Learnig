@@ -1,7 +1,5 @@
 __pycache__/
 *.pyc
-data/
-models_saved/
 .ipynb_checkpoints/
 .env
 .DS_Store
