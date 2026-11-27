@@ -32,7 +32,7 @@ RAIZ_PROYECTO = Path(__file__).resolve().parent.parent
 RUTA_MODELO = RAIZ_PROYECTO / "models_saved" / "modelo_cnn_foliar.pth"
 
 # Colores de la interfaz (ver guia de diseno)
-C_FONDO, C_TARJETA, C_ROJO, C_TEXTO, C_VERDE = "#0D0D0D", "#18181B", "#E11D48", "#FAFAFA", "#10B981"
+C_FONDO, C_TARJETA, C_ROJO, C_TEXTO, C_VERDE = "#0B0E0C", "#151A17", "#E11D48", "#F5F5F4", "#16C172"
 
 
 def obtener_dispositivo():

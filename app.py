@@ -96,34 +96,149 @@ RUTA_RES = dl.RUTA_MODELO.parent / "resultados_cnn.json"
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono&display=swap');
-html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; }
-code, pre { font-family: 'JetBrains Mono', monospace !important; }
-div[data-testid="stHeading"] h2 { border-bottom: 2px solid #10B981; padding-bottom: 6px; }
-.hero { display:flex; align-items:center; gap:18px; padding:20px 24px; margin-bottom:18px;
-        background:linear-gradient(120deg,#18181B 0%,#1d1418 55%,#2b0f17 100%);
-        border:1px solid #27272A; border-left:6px solid #E11D48; border-radius:14px; }
-.hero-title { font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700; color:#FAFAFA; line-height:1.15; }
-.hero-title span { color:#E11D48; }
-.hero-sub { color:#A1A1AA; margin:4px 0 10px 0; }
-.badge { display:inline-block; padding:3px 12px; margin:0 6px 4px 0; border:1px solid #27272A;
-         border-radius:999px; background:#0D0D0D; color:#A1A1AA; font-size:0.8rem; cursor:help; }
-.badge b { color:#10B981; }
-.side-logo { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
-.side-logo div { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; color:#FAFAFA; line-height:1.1; }
-.side-logo small { color:#10B981; font-weight:500; font-size:0.75rem; }
-div[data-testid="stMetric"] { background:#18181B; border:1px solid #27272A; border-left:4px solid #10B981;
-                              border-radius:10px; padding:14px 16px; }
-.tarjeta { background:#18181B; border:1px solid #27272A; border-radius:10px; padding:16px 20px; margin-bottom:12px; }
-.tarjeta h4 { margin:0 0 6px 0; font-family:'Space Grotesk',sans-serif; color:#FAFAFA; }
-.tarjeta p { margin:4px 0; color:#D4D4D8; font-size:0.95rem; }
-.tarjeta .nota { color:#A1A1AA; font-size:0.8rem; margin-top:10px; }
-.barra-fondo { background:#27272A; border-radius:6px; height:12px; width:100%; }
-.barra { height:12px; border-radius:6px; }
-.fila-barra { display:flex; justify-content:space-between; font-size:0.9rem; margin:10px 0 4px 0; color:#FAFAFA; }
+:root {
+  --bg: #0B0E0C;              /* fondo general, negro con tinte verde apenas perceptible */
+  --card: #151A17;            /* fondo de tarjetas, un poco más claro que el fondo */
+  --card-hover: #1B211D;      /* fondo de tarjeta al pasar el mouse */
+  --border: #262E29;          /* bordes sutiles */
+  --accent: #16C172;          /* VERDE = color de marca del proyecto (antes era rojo) */
+  --accent-dark: #0E9A5A;     /* verde oscuro, para hover/sombras */
+  --accent-soft: rgba(22,193,114,0.12); /* verde muy transparente, para fondos suaves */
+  --alert: #E11D48;           /* ROJO = reservado SOLO para "enfermedad detectada" */
+  --warn: #F59E0B;            /* ámbar = advertencias y tizón temprano */
+  --text: #F5F5F4;            /* texto principal */
+  --text-soft: #A8A29E;       /* texto secundario / descripciones */
+}
+html, body, [class*="css"] {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+h1, h2, h3 {
+  font-family: 'Space Grotesk', sans-serif !important;
+  letter-spacing: -0.01em;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+div[data-testid="stHeading"] h2 {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 8px;
+  margin-top: 4px;
+}
+
+/* ---------- BANNER SUPERIOR ---------- */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 220px;
+  padding: 28px 32px;
+  margin-bottom: 22px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(11,14,12,0.92) 0%, rgba(11,14,12,0.55) 55%, rgba(11,14,12,0.25) 100%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.15;
+}
+.hero-title span { color: var(--accent); }
+.hero-sub { color: var(--text-soft); margin: 6px 0 14px 0; font-size: 1rem; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 14px;
+  margin: 0 8px 4px 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(11,14,12,0.55);
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  cursor: help;
+  backdrop-filter: blur(2px);
+}
+.badge b { color: var(--accent); }
+
+/* ---------- SIDEBAR ---------- */
+.side-logo { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.side-logo div { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; color:var(--text); line-height:1.1; }
+.side-logo small { color: var(--accent); font-weight:500; font-size:0.75rem; letter-spacing:0.03em; text-transform:uppercase; }
+
+section[data-testid="stSidebar"] {
+  background-color: #0E1210;
+  border-right: 1px solid var(--border);
+}
+
+/* ---------- TARJETAS DE METRICAS (st.metric) ---------- */
+div[data-testid="stMetric"] {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+div[data-testid="stMetric"]:hover {
+  background: var(--card-hover);
+  transform: translateY(-2px);
+}
+
+/* ---------- TARJETAS PERSONALIZADAS (diagnóstico, info de clase) ---------- */
+.tarjeta {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+}
+.tarjeta h4 { margin:0 0 6px 0; font-family:'Space Grotesk',sans-serif; color: var(--text); }
+.tarjeta p { margin:4px 0; color: var(--text-soft); font-size:0.95rem; line-height:1.5; }
+.tarjeta .nota { color: var(--text-soft); font-size:0.78rem; margin-top:12px; font-style: italic; }
+
+/* ---------- BARRAS DE PROBABILIDAD ---------- */
+.barra-fondo { background: var(--border); border-radius: 8px; height: 14px; width: 100%; overflow: hidden; }
+.barra { height: 14px; border-radius: 8px; transition: width 0.4s ease; }
+.fila-barra { display:flex; justify-content:space-between; font-size:0.9rem; margin:12px 0 5px 0; color: var(--text); }
 .chip { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; }
-.mono { font-family:'JetBrains Mono',monospace; color:#A1A1AA; }
-.nombre-clase { font-family:'Space Grotesk',sans-serif; font-weight:600; margin-bottom:4px; }
+.mono { font-family:'JetBrains Mono',monospace; color: var(--text-soft); }
+.nombre-clase { font-family:'Space Grotesk',sans-serif; font-weight:600; margin-bottom:6px; }
+
+/* ---------- PESTAÑAS (st.tabs) ---------- */
+button[data-baseweb="tab"] {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text-soft) !important;
+}
+button[data-baseweb="tab"][aria-selected="true"] {
+  color: var(--accent) !important;
+}
+div[data-baseweb="tab-highlight"] {
+  background-color: var(--accent) !important;
+}
+
+/* ---------- BOTONES PRIMARIOS ---------- */
+button[kind="primary"] {
+  background-color: var(--accent) !important;
+  border: none !important;
+}
+button[kind="primary"]:hover {
+  background-color: var(--accent-dark) !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -137,6 +252,22 @@ LOGO_SVG = ("<svg width='{s}' height='{s}' viewBox='0 0 64 64' xmlns='http://www
 # ===========================================================================
 # FUNCIONES AUXILIARES
 # ===========================================================================
+import base64
+from pathlib import Path
+
+
+@st.cache_data
+def cargar_banner_base64(ruta="assets/banner.webp"):
+    """Lee la imagen del banner y la convierte a base64 para usarla como
+    fondo CSS. Se cachea para no releer el archivo en cada recarga."""
+    ruta = Path(ruta)
+    if not ruta.exists():
+        return None
+    datos = ruta.read_bytes()
+    codificado = base64.b64encode(datos).decode()
+    extension = ruta.suffix.replace(".", "")
+    return f"data:image/{extension};base64,{codificado}"
+
 def mostrar_fig(fig):
     st.pyplot(fig)
     plt.close(fig)
@@ -170,10 +301,14 @@ def cargar_resultados():
 # ===========================================================================
 # ENCABEZADO
 # ===========================================================================
+banner_img = cargar_banner_base64()
+estilo_fondo = f"background-image: url('{banner_img}');" if banner_img else ""
+
 st.markdown(
-    "<div class='hero'>" + LOGO_SVG.format(s=64) +
-    "<div><div class='hero-title'>Diagnóstico de <span>enfermedades foliares</span> en tomate</div>"
-    "<div class='hero-sub'>Clasificación de hojas con visión por computadora</div>"
+    f"<div class='hero' style=\"{estilo_fondo}\">"
+    "<div class='hero-content'>"
+    "<div class='hero-title'>Diagnóstico de <span>enfermedades foliares</span> en tomate</div>"
+    "<div class='hero-sub'>Clasificación de hojas con visión por computadora · Red Neuronal Convolucional (CNN)</div>"
     "<span class='badge'><b>Área:</b> Visión por computadora</span>"
     f"<span class='badge' title='{AYUDA['cnn'].replace(chr(39), '')}'><b>Modelo:</b> CNN</span>"
     f"<span class='badge' title='{AYUDA['pytorch']}'><b>Librería:</b> PyTorch</span>"
@@ -190,15 +325,26 @@ SEC_NS = "Aprendizaje no supervisado"
 with st.sidebar:
     st.markdown("<div class='side-logo'>" + LOGO_SVG.format(s=34) +
                 "<div>Visión Foliar<br><small>Tomate</small></div></div>", unsafe_allow_html=True)
-    seccion = st.radio("Secciones", [SEC_DATA, SEC_DL, SEC_NS], help=AYUDA["secciones"])
+    seccion = st.radio(
+        "Secciones",
+        [f"📊 {SEC_DATA}", f"🧠 {SEC_DL}", f"🔍 {SEC_NS}"],
+        help=AYUDA["secciones"],
+    )
+    seccion = seccion.split(" ", 1)[1]  # quita el emoji para que coincida con SEC_DATA/SEC_DL/SEC_NS
     st.markdown("---")
     with st.expander("Parámetros del modelo", expanded=(seccion != SEC_NS)):
+        st.markdown("<span class='mono' style='font-size:0.75rem;'>DATOS DE ENTRADA</span>", unsafe_allow_html=True)
         img_size = st.selectbox("Resolución de entrada (px)", [128, 224], index=0, help=AYUDA["resolucion"])
         max_por_clase = st.slider("Imágenes por clase (máximo)", 100, 2000, 600, 100, help=AYUDA["max_por_clase"])
+
+        st.markdown("<hr style='margin:14px 0 10px 0; border-color:#262E29;'>", unsafe_allow_html=True)
+        st.markdown("<span class='mono' style='font-size:0.75rem;'>ENTRENAMIENTO</span>", unsafe_allow_html=True)
         epocas = st.slider("Épocas", 1, 30, 8, help=AYUDA["epocas"])
         lr = st.select_slider("Learning rate", options=[1e-4, 3e-4, 1e-3, 3e-3], value=1e-3,
-                              format_func=lambda v: f"{v:g}", help=AYUDA["lr"])
+                          format_func=lambda v: f"{v:g}", help=AYUDA["lr"])
         batch = st.select_slider("Batch size", options=[16, 32, 64], value=32, help=AYUDA["batch"])
+
+        st.markdown("<hr style='margin:14px 0 10px 0; border-color:#262E29;'>", unsafe_allow_html=True)
         st.caption(f"Dispositivo: **{dl.obtener_dispositivo()}**", help=AYUDA["dispositivo"])
 
 hay_dataset = prep.dataset_disponible()
